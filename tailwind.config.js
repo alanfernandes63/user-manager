@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      opacity: {
+        70: "70%",
+      },
       screens: {
         sm: { max: "640px" },
         md: { max: "768px" },
@@ -19,6 +22,8 @@ module.exports = {
         colorButton: "#00c8b3",
         colorBorderFocus: "#00c8b3",
         colorInvalidInput: "#eb4a46",
+        colorBgDisabledButton: "#f6f6f6",
+        colorFontButtonDisabled: "#dddcdc",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

@@ -65,7 +65,6 @@ export const InputEmail = memo((props) => {
 });
 
 export const InputTelefone = memo((props) => {
-  const { getValues } = useFormContext();
   const messages = {
     required: "O campo deve ser preenchido corretamente",
     pattern: "O campo deve seguir este padrão (99) 99999-9999",
@@ -85,7 +84,7 @@ export const InputTelefone = memo((props) => {
         }}
         control={props.control}
         render={({ field }) => (
-          <InputMask id="telefone" mask="(99) 99999-9999" {...field}>
+          <InputMask id={props.id} mask="(99) 99999-9999" {...field}>
             {() => (
               <input
                 className={`w-full border-b-2 outline-none ${
@@ -97,7 +96,50 @@ export const InputTelefone = memo((props) => {
             )}
           </InputMask>
         )}
-        name="telefone"
+        name={props.name}
+      ></Controller>
+
+      <p className="text-sm text-colorInvalidInput">
+        {messages[props.errors?.type]}
+      </p>
+    </div>
+  );
+});
+
+export const InputCPF = memo((props) => {
+  const { getValues } = useFormContext();
+  const messages = {
+    required: "O campo deve ser preenchido corretamente",
+    pattern: "O campo deve seguir este padrão 999.999.999-99",
+  };
+
+  return (
+    <div className="mb-4 w-full">
+      <label className="block text-gray-400 text-sm mb-1" htmlFor={props.for}>
+        {`${props.label}`}
+      </label>
+      <Controller
+        defaultValue=""
+        rules={{
+          required: true,
+          pattern:
+            /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/,
+        }}
+        control={props.control}
+        render={({ field }) => (
+          <InputMask id={props.id} mask="999.999.999-99" {...field}>
+            {() => (
+              <input
+                className={`w-full border-b-2 outline-none ${
+                  props.errors
+                    ? "border-colorInvalidInput"
+                    : "focus:border-colorBorderFocus"
+                }  focus:text-colorTextInputWithFocus`}
+              />
+            )}
+          </InputMask>
+        )}
+        name={props.name}
       ></Controller>
 
       <p className="text-sm text-colorInvalidInput">
