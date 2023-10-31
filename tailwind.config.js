@@ -10,8 +10,9 @@ module.exports = {
       colors: {
         colorTextInputWithoutFocus: "#efeeed",
         colorTextInputWithFocus: "#333333",
-        borderColor: "#efeeed",
-        buttonColor: "#00c8b3",
+        colorBorder: "#efeeed",
+        colorButton: "#00c8b3",
+        colorBorderFocus: "#00c8b3",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
