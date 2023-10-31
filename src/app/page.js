@@ -7,19 +7,23 @@ import Spinner from "./components/Spinner";
 import { save } from "./services/user/index";
 
 export default function Home() {
-  const methods = useForm();
+  const {
+    formState: { errors },
+    ...methods
+  } = useForm();
   const [loading, setLoading] = useState(false);
   const imageSize = { width: 228, height: 76 };
-
+  const onErrors = (err) => {
+    console.log(err);
+  };
   const onSubmit = (data) => {
     (async () => {
       try {
         setLoading(true);
         const response = await save(data);
-        console.log(response);
         setLoading(false);
         if (response.status === 200) {
-          methods.reset({ nome: null, email: null, cpf: null, telefone: null });
+          methods.reset();
         }
       } catch (err) {
         setLoading(false);
@@ -38,10 +42,11 @@ export default function Home() {
       />
       <FormProvider {...methods}>
         <form
-          onSubmit={methods.handleSubmit(onSubmit)}
+          onSubmit={methods.handleSubmit(onSubmit, onErrors)}
           className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
         >
-          <InputText label="Nome" id="nome" />
+          {errors?.name}
+          <InputText label="Nome" id="nome" errors={errors?.nome} />
           <InputText label="E-mail" id="email" />
           <InputText label="CPF" id="cpf" />
           <InputText label="Telefone" id="telefone" />

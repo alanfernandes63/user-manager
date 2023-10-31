@@ -9,7 +9,7 @@ const InputText = memo((props) => {
         {props.label}
       </label>
       <input
-        {...register(props.id)}
+        {...register(props.id, { required: true })}
         type="text"
         className="border-b-2 outline-none focus:border-colorBorderFocus focus:text-colorTextInputWithFocus"
         id={props.id}
