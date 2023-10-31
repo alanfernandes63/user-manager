@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import InputText from "./components/Input";
+import { InputText, InputEmail, InputTelefone } from "./components/Input";
 import { useForm, FormProvider } from "react-hook-form";
 import Spinner from "./components/Spinner";
 import { save } from "./services/user/index";
@@ -11,16 +11,18 @@ export default function Home() {
     formState: { errors },
     ...methods
   } = useForm();
+
   const [loading, setLoading] = useState(false);
+  const [telefone, setTelefone] = useState();
   const imageSize = { width: 228, height: 76 };
-  const onErrors = (err) => {
-    console.log(err);
-  };
+  const onErrors = (err) => {};
   const onSubmit = (data) => {
     (async () => {
       try {
+        console.log(data);
         setLoading(true);
         const response = await save(data);
+        methods.clearErrors();
         setLoading(false);
         if (response.status === 200) {
           methods.reset();
@@ -43,13 +45,30 @@ export default function Home() {
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(onSubmit, onErrors)}
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          className="bg-white shadow-md rounded px-20 pt-6 pb-8 mb-4"
         >
-          {errors?.name}
-          <InputText label="Nome" id="nome" errors={errors?.nome} />
-          <InputText label="E-mail" id="email" />
+          <InputText
+            label="Nome"
+            id="nome"
+            vldt={{ required: true, minLength: 3 }}
+            errors={errors?.nome}
+          />
+          <InputEmail
+            label="E-mail"
+            id="email"
+            errors={errors?.email}
+            vldt={{
+              required: true,
+            }}
+          />
           <InputText label="CPF" id="cpf" />
-          <InputText label="Telefone" id="telefone" />
+
+          <InputTelefone
+            control={methods.control}
+            errors={errors?.telefone}
+            label="Telefone"
+          />
+
           <button
             type="submit"
             className="rounded-full w-full h-9 bg-colorButton"

@@ -13,6 +13,7 @@ module.exports = {
         colorBorder: "#efeeed",
         colorButton: "#00c8b3",
         colorBorderFocus: "#00c8b3",
+        colorInvalidInput: "#eb4a46",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
