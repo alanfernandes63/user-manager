@@ -7,6 +7,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        sm: { max: "640px" },
+        md: { max: "768px" },
+        lg: { max: "2000px" },
+      },
       colors: {
         colorTextInputWithoutFocus: "#efeeed",
         colorTextInputWithFocus: "#333333",

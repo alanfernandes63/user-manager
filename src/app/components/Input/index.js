@@ -77,25 +77,25 @@ export const InputTelefone = memo((props) => {
         {`${props.label}`}
       </label>
       <Controller
+        defaultValue=""
         rules={{
           required: true,
           pattern:
             /^\((?:[14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])\) (?:[2-8]|9[0-9])[0-9]{3}\-[0-9]{4}$/,
         }}
         control={props.control}
-        render={({ field: { onChange, onBlur, ref } }) => (
-          <InputMask
-            mask="(99) 99999-9999"
-            onBlur={onBlur}
-            onChange={onChange}
-            inputRef={ref}
-            className={`w-full border-b-2 outline-none ${
-              props.errors
-                ? "border-colorInvalidInput"
-                : "focus:border-colorBorderFocus"
-            }  focus:text-colorTextInputWithFocus`}
-            id={props.id}
-          ></InputMask>
+        render={({ field }) => (
+          <InputMask id="telefone" mask="(99) 99999-9999" {...field}>
+            {() => (
+              <input
+                className={`w-full border-b-2 outline-none ${
+                  props.errors
+                    ? "border-colorInvalidInput"
+                    : "focus:border-colorBorderFocus"
+                }  focus:text-colorTextInputWithFocus`}
+              />
+            )}
+          </InputMask>
         )}
         name="telefone"
       ></Controller>
