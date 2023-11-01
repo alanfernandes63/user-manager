@@ -103,7 +103,7 @@ export default function Home() {
                     : "bg-colorButton hover:opacity-70"
                 }`}
               >
-                {loading ? <Spinner /> : `Cadastrar`}
+                {loading ? <Spinner width={4} height={4} /> : `Cadastrar`}
               </button>
             </form>
           </FormProvider>

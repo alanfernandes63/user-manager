@@ -7,21 +7,29 @@ import { listAll } from "../services/user";
 
 export default function ListarUsuarios(prop) {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
-      const response = await listAll();
-      if (response.status === 200) {
-        setData(response.data);
+      try {
+        setLoading(true);
+        const response = await listAll();
+        if (response.status === 200) {
+          setData(response.data);
+          setLoading(false);
+        }
+      } catch (err) {
+        setLoading(false);
+        console.error(err);
       }
     })();
-  }, [setData]);
+  }, [setData, setLoading]);
 
   return (
     <>
       <NavBar />
       <main className="flex align-middle justify-center min-h-screen md:w-full">
-        <DataTable data={data} />
+        <DataTable loading={loading} data={data} />
       </main>
     </>
   );

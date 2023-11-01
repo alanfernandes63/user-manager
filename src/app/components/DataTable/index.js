@@ -1,6 +1,17 @@
 import { phoneNumberFormatter, CPFformatter } from "@/app/utils/formatter";
+import Spinner from "../Spinner";
 
 export default function DataTable(props) {
+  const spinner = () => (
+    <>
+      <td></td>
+      <td></td>
+      <td>
+        <Spinner width={8} height={8} />
+      </td>
+    </>
+  );
+
   return (
     <div className="container mx-auto px-4 sm:px-8">
       <div className="py-8">
@@ -29,7 +40,9 @@ export default function DataTable(props) {
                 </tr>
               </thead>
               <tbody>
-                {!props.data
+                {props.loading
+                  ? spinner()
+                  : !props.data
                   ? []
                   : props.data.map((user) => (
                       <tr className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
