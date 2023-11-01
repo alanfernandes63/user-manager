@@ -26,3 +26,21 @@ export function CPFformatter(value) {
   const lastNumbers = value.substring(9);
   return `${firstNumbers}.${secondNumbers}.${thirdThreeNumbers}-${lastNumbers}`;
 }
+
+export function cleanCPF(value) {
+  if (!value) {
+    return value;
+  }
+  return value.replace(".", "").replace(".", "").replace("-", "");
+}
+
+export function cleanPhoneNumber(value) {
+  if (!value) {
+    return value;
+  }
+  return value
+    .replace("(", "")
+    .replace(")", "")
+    .replace("-", "")
+    .replace(" ", "");
+}

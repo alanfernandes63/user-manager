@@ -12,6 +12,7 @@ import { save } from "./services/user/index";
 import NavBar from "./components/NavBar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { cleanCPF, cleanPhoneNumber } from "./utils/formatter";
 
 export default function Home() {
   const {
@@ -22,8 +23,10 @@ export default function Home() {
 
   const [loading, setLoading] = useState(false);
   const onErrors = (err) => {};
+
   const onSubmit = (data) => {
-    console.log(data);
+    console.log(console.log(cleanCPF(data.cpf)));
+    console.log(console.log(cleanPhoneNumber(data.phone)));
     (async () => {
       try {
         setLoading(true);
@@ -64,7 +67,7 @@ export default function Home() {
             >
               <InputText
                 label="Nome"
-                id="nome"
+                id="name"
                 vldt={{ required: true, minLength: 3 }}
                 errors={errors?.nome}
               />
@@ -90,8 +93,7 @@ export default function Home() {
                 control={methods.control}
                 errors={errors?.telefone}
                 label="Telefone"
-                id="telefone"
-                name="telefone"
+                name="phone"
               />
 
               <button
