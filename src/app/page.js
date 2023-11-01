@@ -56,7 +56,7 @@ export default function Home() {
       <ToastContainer ltr autoClose={true} />
       <main className="min-h-screen">
         <NavBar />
-        <div className="flex min-h-full  md:justify-center lg:justify-center flex-col items-center sm:justify-center justify-between  sm:w-full sm:min-w-full md:w-full">
+        <div className="mt-24 flex min-h-full  md:justify-center lg:justify-center flex-col items-center sm:justify-center justify-between  sm:w-full sm:min-w-full md:w-full">
           <FormProvider {...methods}>
             <form
               onSubmit={methods.handleSubmit(onSubmit, onErrors)}
@@ -68,6 +68,7 @@ export default function Home() {
                 vldt={{ required: true, minLength: 3 }}
                 errors={errors?.nome}
               />
+
               <InputEmail
                 label="E-mail"
                 id="email"
@@ -76,6 +77,7 @@ export default function Home() {
                   required: true,
                 }}
               />
+
               <InputCPF
                 control={methods.control}
                 errors={errors?.cpf}
@@ -91,6 +93,7 @@ export default function Home() {
                 id="telefone"
                 name="telefone"
               />
+
               <button
                 disabled={Object.values(errors).length !== 0}
                 type="submit"
