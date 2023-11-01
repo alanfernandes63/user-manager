@@ -23,14 +23,26 @@ export default function Home() {
 
   const [loading, setLoading] = useState(false);
   const onErrors = (err) => {};
-
   const onSubmit = (data) => {
-    console.log(console.log(cleanCPF(data.cpf)));
-    console.log(console.log(cleanPhoneNumber(data.phone)));
+    const formattedData = {
+      ...data,
+      cpf: cleanCPF(data.cpf),
+      phone: cleanPhoneNumber(data.phone),
+    };
+
     (async () => {
       try {
         setLoading(true);
-        const response = await save(data);
+        const response = await save(formattedData);
+        if (!localStorage.getItem("users")) {
+          localStorage.setItem("users", JSON.stringify([]));
+        }
+        const usersLocalStorage = JSON.parse(localStorage.getItem("users"));
+        localStorage.setItem(
+          "users",
+          JSON.stringify([...usersLocalStorage, response.data])
+        );
+
         setLoading(false);
         if (response.status === 200) {
           notify();

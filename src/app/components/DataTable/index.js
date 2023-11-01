@@ -1,7 +1,20 @@
+"use client";
+import { useContext } from "react";
 import { phoneNumberFormatter, CPFformatter } from "@/app/utils/formatter";
 import Spinner from "../Spinner";
+import { TableContext } from "@/app/context";
 
 export default function DataTable(props) {
+  const { setData } = useContext(TableContext);
+
+  const deleteUser = (cpf) => {
+    const users = JSON.parse(localStorage.getItem("users"));
+    const filteredUsers = users.filter((user) => user.cpf !== cpf);
+    localStorage.removeItem("users");
+    localStorage.setItem("users", JSON.stringify(filteredUsers));
+    setData(filteredUsers);
+  };
+
   const spinner = () => (
     <>
       <td></td>
@@ -67,7 +80,12 @@ export default function DataTable(props) {
                           </p>
                         </td>
                         <td>
-                          <button className="hover:bg-slate-200 rounded-full w-10 h-10 align-middle flex justify-center items-center">
+                          <button
+                            onClick={() => {
+                              deleteUser(user.cpf);
+                            }}
+                            className="hover:bg-slate-200 rounded-full w-10 h-10 align-middle flex justify-center items-center"
+                          >
                             <svg
                               className="h-6 w-6 text-red-500"
                               viewBox="0 0 24 24"
