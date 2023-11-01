@@ -10,9 +10,10 @@ import { useForm, FormProvider } from "react-hook-form";
 import Spinner from "./components/Spinner";
 import { save } from "./services/user/index";
 import NavBar from "./components/NavBar";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { cleanCPF, cleanPhoneNumber } from "./utils/formatter";
+import { notificationError, notificationSuccess } from "./utils/notification";
 
 export default function Home() {
   const {
@@ -22,7 +23,9 @@ export default function Home() {
   } = useForm({ mode: "onTouched" });
 
   const [loading, setLoading] = useState(false);
-  const onErrors = (err) => {};
+  const onErrors = (err) => {
+    console.log(err);
+  };
   const onSubmit = (data) => {
     const formattedData = {
       ...data,
@@ -44,26 +47,16 @@ export default function Home() {
         );
 
         setLoading(false);
-        if (response.status === 200) {
-          notify();
+        if (response.status === 201) {
+          notificationSuccess("Salvo com sucesso!");
           reset();
         }
       } catch (err) {
         setLoading(false);
+        notificationError("Erro ao na requisição");
         console.error(err);
       }
     })();
-  };
-
-  const notify = () => {
-    const options = {
-      autoClose: 1500,
-      type: toast.TYPE.SUCCESS,
-      hideProgressBar: false,
-      position: toast.POSITION.BOTTOM_RIGHTs,
-      pauseOnHover: true,
-    };
-    return toast("Salvo com sucesso", options);
   };
 
   return (
@@ -81,7 +74,7 @@ export default function Home() {
                 label="Nome"
                 id="name"
                 vldt={{ required: true, minLength: 3 }}
-                errors={errors?.nome}
+                errors={errors?.name}
               />
 
               <InputEmail
@@ -103,7 +96,7 @@ export default function Home() {
 
               <InputTelefone
                 control={methods.control}
-                errors={errors?.telefone}
+                errors={errors?.phone}
                 label="Telefone"
                 name="phone"
               />
@@ -117,7 +110,7 @@ export default function Home() {
                     : "bg-colorButton hover:opacity-70"
                 }`}
               >
-                {loading ? <Spinner width={4} height={4} /> : `Cadastrar`}
+                {loading ? <Spinner width={"4"} height={"4"} /> : `Cadastrar`}
               </button>
             </form>
           </FormProvider>

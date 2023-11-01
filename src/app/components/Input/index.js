@@ -83,19 +83,22 @@ export const InputTelefone = memo((props) => {
             /^\((?:[14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])\) (?:[2-8]|9[0-9])[0-9]{3}\-[0-9]{4}$/,
         }}
         control={props.control}
-        render={({ field }) => (
-          <InputMask id={props.id} mask="(99) 99999-9999" {...field}>
-            {() => (
-              <input
-                className={`w-full border-b-2 outline-none ${
-                  props.errors
-                    ? "border-colorInvalidInput"
-                    : "focus:border-colorBorderFocus"
-                }  focus:text-colorTextInputWithFocus`}
-              />
-            )}
-          </InputMask>
-        )}
+        render={({ field }) => {
+          return (
+            <InputMask
+              value={field.value}
+              onChange={field.onChange}
+              inputRef={field.ref}
+              id={props.id}
+              mask="(99) 99999-9999"
+              className={`w-full border-b-2 outline-none ${
+                props.errors
+                  ? "border-colorInvalidInput"
+                  : "focus:border-colorBorderFocus"
+              }  focus:text-colorTextInputWithFocus`}
+            ></InputMask>
+          );
+        }}
         name={props.name}
       ></Controller>
 
@@ -107,7 +110,6 @@ export const InputTelefone = memo((props) => {
 });
 
 export const InputCPF = memo((props) => {
-  const { getValues } = useFormContext();
   const messages = {
     required: "O campo deve ser preenchido corretamente",
     pattern: "O campo deve seguir este padrão 999.999.999-99",
@@ -126,19 +128,23 @@ export const InputCPF = memo((props) => {
             /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/,
         }}
         control={props.control}
-        render={({ field }) => (
-          <InputMask id={props.id} mask="999.999.999-99" {...field}>
-            {() => (
-              <input
-                className={`w-full border-b-2 outline-none ${
-                  props.errors
-                    ? "border-colorInvalidInput"
-                    : "focus:border-colorBorderFocus"
-                }  focus:text-colorTextInputWithFocus`}
-              />
-            )}
-          </InputMask>
-        )}
+        render={({ field }) => {
+          return (
+            <InputMask
+              id={props.id}
+              mask="999.999.999-99"
+              inputRef={field.ref}
+              onBlur={field.onBlur}
+              onChange={field.onChange}
+              value={field.value}
+              className={`w-full border-b-2 outline-none ${
+                props.errors
+                  ? "border-colorInvalidInput"
+                  : "focus:border-colorBorderFocus"
+              }  focus:text-colorTextInputWithFocus`}
+            ></InputMask>
+          );
+        }}
         name={props.name}
       ></Controller>
 

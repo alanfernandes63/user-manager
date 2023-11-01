@@ -3,16 +3,25 @@ import { useContext } from "react";
 import { phoneNumberFormatter, CPFformatter } from "@/app/utils/formatter";
 import Spinner from "../Spinner";
 import { TableContext } from "@/app/context";
+import {
+  notificationError,
+  notificationSuccess,
+} from "@/app/utils/notification";
 
 export default function DataTable(props) {
   const { setData } = useContext(TableContext);
 
   const deleteUser = (cpf) => {
-    const users = JSON.parse(localStorage.getItem("users"));
-    const filteredUsers = users.filter((user) => user.cpf !== cpf);
-    localStorage.removeItem("users");
-    localStorage.setItem("users", JSON.stringify(filteredUsers));
-    setData(filteredUsers);
+    try {
+      const users = JSON.parse(localStorage.getItem("users"));
+      const filteredUsers = users.filter((user) => user.cpf !== cpf);
+      localStorage.removeItem("users");
+      localStorage.setItem("users", JSON.stringify(filteredUsers));
+      setData(filteredUsers);
+      notificationSuccess("Usuário excluído com sucesso!");
+    } catch (err) {
+      notificationError("Erro ao tentar excluir");
+    }
   };
 
   const spinner = () => (
@@ -20,7 +29,7 @@ export default function DataTable(props) {
       <td></td>
       <td></td>
       <td>
-        <Spinner width={8} height={8} />
+        <Spinner width={"8"} height={"8"} />
       </td>
     </>
   );
