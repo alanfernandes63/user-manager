@@ -102,7 +102,7 @@ export const InputTelefone = memo((props) => {
         name={props.name}
       ></Controller>
 
-      <p className="text-sm text-colorInvalidInput">
+      <p id="invalid-phone" className="text-sm text-colorInvalidInput">
         {messages[props.errors?.type]}
       </p>
     </div>

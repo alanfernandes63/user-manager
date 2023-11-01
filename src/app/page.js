@@ -99,6 +99,7 @@ export default function Home() {
                 errors={errors?.phone}
                 label="Telefone"
                 name="phone"
+                id="phone"
               />
 
               <button
